@@ -36,7 +36,13 @@ let lastUpdate = Date.now();
 
   function loop() {
     requestAnimationFrame(loop);
-    ctx.clearRect(0, 0, 400, 300);
+    if(countLife==0){
+      ctx.clearRect(10,50,10,10)   
+      ctx.font = 'bold 50px Open Sans'
+      ctx.fillText("Game Over",100,200)
+     countLife = k
+    }  
+  let k =   ctx.clearRect(0, 0, 400, 300);
 
     const elapsed = Date.now() - lastUpdate;
     lastUpdate = Date.now();
@@ -54,13 +60,13 @@ let lastUpdate = Date.now();
     for (let ball of balls) {
      
       ball.y += 1;
-      
+  
     
       
     }
 
 for(i = 0;i<countLife;i++){
- 
+  
   ctx.fillStyle = "red"
   ctx.fillRect(10+20*i,50,10,10)
 }
@@ -72,10 +78,17 @@ for(i = 0;i<countLife;i++){
       if(ball.y == paddle.y){
         if(ball.x>=paddle.x&&ball.x<=paddle.x+50){
           score++
-          console.log(score)}
+          ctx.fillStyle = "white"
+          ctx.fillRect(ball.x-20,ball.y-10,30,10)
+          var x = balls.indexOf(ball)
+          balls.splice(x,1)
+         
+          ctx.fillRect(ball.x-20,ball.y+10,30,20)
+         
+        }
           else{
             countLife--
-            
+          
           }
         
       }
@@ -87,6 +100,14 @@ for(i = 0;i<countLife;i++){
 
   };
   loop();
+  canvas.addEventListener("click",function(event){
+    if(event.x-25>=paddle.x){
+      right();
+    }
+    else {
+      left();
+    }
+  })
   function left(){
     paddle.x = paddle.x-20
    
@@ -103,7 +124,7 @@ for(i = 0;i<countLife;i++){
     }
   }
   
- console.log(lifes)
+
 
 
 
